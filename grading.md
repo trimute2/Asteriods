@@ -28,4 +28,4 @@
 |        |    -10 | Coding Standards   |
 |        |    -10 | Project does not use .gitignore effectively    |
 |        |    -10 | Project is late    |
-|        |    195 | Score              |
+|        | **195**| **Total Score**    |
