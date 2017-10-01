@@ -1,5 +1,5 @@
 | Earned | Points | **Ship/Player Character & Movement** |
-| ------ | ------ | ------------------------------------ |
+| -----: | -----: | :----------------------------------- |
 |        |     10 | Properly utilizes position, velocity, acceleration. Rotates left and right with arrow keys. |
 |        |     10 | Acceleration (speeding up) and deceleration (slowing down) are gradual and obvious. |
 |        |     15 | Accelerates with up-arrow. Decelerates upon no up-arrow. Ship stops or moves slowly when not accelerating. |
@@ -21,11 +21,11 @@
 |        |     10 | Ship lives are displayed on-screen. |
 |        |     10 | Accurate score is displayed on-screen. |
 |        |        | **Above & Beyond** | | |
-|        |     10 | Your game includes something extra.  It’s obvious you spent time working on your extras.  Points are earned for demonstration of something new we have not learned in class, or a clear effort in adding extras to your game. |
+|        |     20 | Your game includes something extra.  It’s obvious you spent time working on your extras.  Points are earned for demonstration of something new we have not learned in class, or a clear effort in adding extras to your game. |
 |        |        | **Documentation** | | |
 |        |     10 | Documentation.md file is complete and descriptive. |
 |        |        | **Deductions** | | |
 |        |    -10 | Coding Standards   |
 |        |    -10 | Project does not use .gitignore effectively    |
 |        |    -10 | Project is late    |
-|        |    185 | Score              |
+|        |    195 | Score              |
