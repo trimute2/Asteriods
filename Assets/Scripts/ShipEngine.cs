@@ -23,6 +23,19 @@ public class ShipEngine : MonoBehaviour {
 
 	Wraper wraper;
 
+	public Quaternion Heading{
+		get{
+			return Helper.UnitToQuat(heading);
+		}
+	}
+
+
+	public Vector3 Position{
+		get{
+			return this.transform.position;
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		heading = Vector3.right;

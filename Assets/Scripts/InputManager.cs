@@ -5,6 +5,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour {
 
 	public ShipEngine engine;
+	public BulletManager bulletManager;
 	
 	// Update is called once per frame
 	void Update () {
@@ -21,6 +22,9 @@ public class InputManager : MonoBehaviour {
 		}
 		if (vertical != 0) {
 			engine.Thrust (vertical);
+		}
+		if (Input.GetKey (KeyCode.Space)) {
+			bulletManager.AddBullet (engine.Position, engine.Heading);
 		}
 	}
 }
