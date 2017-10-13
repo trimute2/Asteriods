@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Wraper))]
 public class Projectile : MonoBehaviour {
 
 	[Range(0f, 5f)]
@@ -21,8 +22,8 @@ public class Projectile : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		bulletLifeSpan -= Time.deltaTime;
-		if (bulletLifeSpan <= 0) {
+		bulletTime -= Time.deltaTime;
+		if (bulletTime <= 0) {
 			Destroy (this.gameObject);
 		}
 		Vector3 position = this.transform.position;

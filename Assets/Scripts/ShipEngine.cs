@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Wraper))]
 public class ShipEngine : MonoBehaviour {
 
 	[Range(0f, 5f)]
@@ -36,7 +37,6 @@ public class ShipEngine : MonoBehaviour {
 		}
 	}
 
-	// Use this for initialization
 	void Start () {
 		heading = Vector3.right;
 		velocity = Vector3.zero;
