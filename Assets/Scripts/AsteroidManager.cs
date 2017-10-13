@@ -16,6 +16,10 @@ public class AsteroidManager : MonoBehaviour {
 		Spawn (startingNumber);
 	}
 
+	/// <summary>
+	/// Spawn the specified spawnNumber.
+	/// </summary>
+	/// <param name="spawnNumber">The number of instances to spawn.</param>
 	void Spawn(int spawnNumber){
 		Vector3 max = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width, Screen.height));
 		Vector3 min = Camera.main.ScreenToWorldPoint (Vector3.zero);

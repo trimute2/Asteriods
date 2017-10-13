@@ -21,10 +21,17 @@ public class AsteroidScript : MonoBehaviour {
 		wraper = this.GetComponent<Wraper> ();
 	}
 
-	void Update () {
+	/// <summary>
+	/// Move this instance.
+	/// </summary>
+	public void Move(){
 		Vector3 position = this.transform.position;
 		position += velocity;
 		position = wraper.Wrap (position);
 		this.transform.position = position;
+	}
+
+	void Update () {
+		Move();
 	}
 }

@@ -15,6 +15,11 @@ public class BulletManager : MonoBehaviour {
 		bullets = new List<GameObject> ();
 	}
 
+	/// <summary>
+	/// Adds a new bullet.
+	/// </summary>
+	/// <param name="position">the Position of the new bullet.</param>
+	/// <param name="heading">the Heading of the new bullet.</param>
 	public void AddBullet(Vector3 position, Quaternion heading){
 		if (bulletTime == 0) {
 			GameObject newBullet = Instantiate (bullet, position, heading);
@@ -23,18 +28,40 @@ public class BulletManager : MonoBehaviour {
 		}
 	}
 
-	// Update is called once per frame
-	void Update () {
+	/// <summary>
+	/// Ticks the bullet time.
+	/// </summary>
+	/// <param name="time">the amount of Time to tick.</param>
+	public void TickBulletTime(float time){
 		if (bulletTime > 0) {
-			bulletTime -= Time.deltaTime;
+			bulletTime -= time;
 			if (bulletTime < 0) {
 				bulletTime = 0;
 			}
 		}
+	}
+
+	/// <summary>
+	/// Ticks the bullet time by delta time.
+	/// </summary>
+	public void TickBulletTime(){
+		this.TickBulletTime (Time.deltaTime);
+	}
+
+	/// <summary>
+	/// Checks the bullet list and remove destroyed bullets.
+	/// </summary>
+	public void CheckBulletList(){
 		for (int i = bullets.Count - 1; i > 0; i--) {
 			if (bullets [i] == null) {
 				bullets.RemoveAt (i);
 			}
 		}
+	}
+
+	// Update is called once per frame
+	void Update () {
+		TickBulletTime ();
+		CheckBulletList ();
 	}
 }
