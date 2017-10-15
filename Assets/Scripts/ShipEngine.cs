@@ -75,7 +75,7 @@ public class ShipEngine : MonoBehaviour {
 	/// <summary>
 	/// Move this instance.
 	/// </summary>
-	void Move() {
+	public void Move() {
 		//get the position
 		Vector3 position = transform.position;
 		//calculate the change in position
@@ -100,7 +100,7 @@ public class ShipEngine : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	/*void Update () {
 		Move ();
-	}
+	}*/
 }

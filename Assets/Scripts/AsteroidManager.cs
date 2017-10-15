@@ -9,10 +9,17 @@ public class AsteroidManager : MonoBehaviour {
 	public int startingNumber;
 	public float absentRadius;
 
-	List<GameObject> Asteroids;
+	List<GameObject> asteroids;
+
+	public List<GameObject> AsteroidsList{
+		get{
+			return asteroids;
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
-		Asteroids = new List<GameObject> ();
+		asteroids = new List<GameObject> ();
 		Spawn (startingNumber);
 	}
 
@@ -31,13 +38,40 @@ public class AsteroidManager : MonoBehaviour {
 			} while(position.sqrMagnitude < absentRadius * absentRadius);
 			float angle = Random.Range (0f, 360f);
 			GameObject newAsteroid = Instantiate (Asteroid, position, Quaternion.AngleAxis(angle,Vector3.forward));
-			Asteroids.Add (newAsteroid);
+			newAsteroid.GetComponent<AsteroidScript> ().LevelOneStart ();
+			asteroids.Add (newAsteroid);
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	/// <summary>
+	/// Deystroies an asteroid.
+	/// </summary>
+	/// <param name="i">The index of the asteroid to be destroyed.</param>
+	public void DeystroyAsteroid(int i){
+		if (i >= 0 && i < asteroids.Count) {
+			Destroy (asteroids [i]);
+			asteroids.RemoveAt (i);
+		}
+	}
+
+	/// <summary>
+	/// Destroies an asteroid.
+	/// </summary>
+	/// <param name="roid">the asteroid to be destroyed.</param>
+	public void DestroyAsteroid(GameObject roid){
+		if (asteroids.Contains (roid)) {
+			asteroids.Remove (roid);
+			Destroy (roid);
+		}
+	}
+
+	/// <summary>
+	/// Moves the asteroids.
+	/// </summary>
+	public void MoveAsteroids(){
+		foreach (GameObject roid in asteroids) {
+			roid.GetComponent<AsteroidScript> ().Move ();
+		}
 	}
 
 	void OnDrawGizmosSelected(){

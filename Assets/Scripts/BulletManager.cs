@@ -9,6 +9,12 @@ public class BulletManager : MonoBehaviour {
 
 	private float bulletTime;
 	private List<GameObject> bullets;
+
+	public List<GameObject> BulletsList{
+		get{
+			return bullets;
+		}
+	}
 	// Use this for initialization
 	void Start () {
 		bulletTime = 0;
@@ -39,6 +45,9 @@ public class BulletManager : MonoBehaviour {
 				bulletTime = 0;
 			}
 		}
+		foreach (GameObject bullet in bullets) {
+			bullet.GetComponent<Projectile> ().TickBulletTime (time);
+		}
 	}
 
 	/// <summary>
@@ -52,16 +61,30 @@ public class BulletManager : MonoBehaviour {
 	/// Checks the bullet list and remove destroyed bullets.
 	/// </summary>
 	public void CheckBulletList(){
-		for (int i = bullets.Count - 1; i > 0; i--) {
+		for (int i = bullets.Count - 1; i >= 0; i--) {
 			if (bullets [i] == null) {
 				bullets.RemoveAt (i);
 			}
 		}
 	}
 
+	public void DestroyBullet(int i){
+		Destroy (bullets [i]);
+		bullets.RemoveAt (i);
+	}
+
+	/// <summary>
+	/// Moves the bullets.
+	/// </summary>
+	public void MoveBullets(){
+		foreach (GameObject bullet in bullets) {
+			bullet.GetComponent<Projectile> ().Move ();
+		}
+	}
+
 	// Update is called once per frame
-	void Update () {
+	/*void Update () {
 		TickBulletTime ();
 		CheckBulletList ();
-	}
+	}*/
 }

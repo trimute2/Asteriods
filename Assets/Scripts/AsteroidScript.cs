@@ -11,14 +11,44 @@ public class AsteroidScript : MonoBehaviour {
 	[Range(0f, 5f)]
 	public float maxSpeed;
 
+	public float radius;
+
+	public List<Sprite> shapes;
+
 	Vector3 velocity;
 	Wraper wraper;
+	int level;
 
+	public int Level{
+		get{
+			return level;
+		}
+	}
+	/// <summary>
+	/// the start called for all instances
+	/// </summary>
 	void Start () {
-		float angle = Random.Range (0f, 360f);
-		velocity = Helper.DegreeToVector3 (angle);
-		velocity = velocity.normalized * Random.Range (minSpeed, maxSpeed);
+		Sprite s = shapes [Random.Range (0, shapes.Count)];
+		this.GetComponent<SpriteRenderer> ().sprite = s;
 		wraper = this.GetComponent<Wraper> ();
+	}
+
+	/// <summary>
+	/// The start called for level one asteroids
+	/// </summary>
+	public void LevelOneStart(){
+		this.level = 1;
+		float angle = Random.Range (0f, 360f);
+		this.velocity = Helper.DegreeToVector3 (angle);
+		this.velocity = velocity.normalized * Random.Range (minSpeed, maxSpeed);
+	}
+
+	/// <summary>
+	/// The start called for level two asteroids
+	/// </summary>
+	public void LevelTwoStart(){
+		level = 2;
+
 	}
 
 	/// <summary>
@@ -31,7 +61,14 @@ public class AsteroidScript : MonoBehaviour {
 		this.transform.position = position;
 	}
 
-	void Update () {
+	/*void Update () {
 		Move();
+		//Debug.Log (velocity);
+	}*/
+
+	void OnDrawGizmosSelected(){
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireCube (this.transform.position, this.GetComponent<SpriteRenderer> ().bounds.size);
+		Gizmos.DrawWireSphere (this.transform.position, this.radius);
 	}
 }
