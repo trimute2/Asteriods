@@ -24,10 +24,10 @@ public class CollisionManager : MonoBehaviour {
 			CollisionCircle curr = asteroids [i].GetComponent<CollisionCircle> ();
 			for (int j = bullets.Count - 1; j >= 0; j--) {
 				if(curr.TestCollisionCircle(bullets[j].GetComponent<CollisionCircle>())){
-					asteroidManager.DeystroyAsteroid (i);
+					//asteroidManager.DestroyAsteroid (i);
+					asteroidManager.DestroyAsteroid (asteroids[i]);
 					bulletManager.DestroyBullet (j);
 					j = -1;
-					Debug.Log (bullets.Count);
 				}
 			}
 		}
@@ -37,6 +37,13 @@ public class CollisionManager : MonoBehaviour {
 	/// Collides the ship with the asteroids.
 	/// </summary>
 	public void CollideShipAsteroids(){
+		List<GameObject> asteroids = asteroidManager.AsteroidsList;
+		CollisionCircle shipCollider = Ship.GetComponent<CollisionCircle> ();
+		for (int i = asteroids.Count - 1; i >= 0; i--) {
+			if (shipCollider.TestCollisionCircle (asteroids [i].GetComponent<CollisionCircle> ())) {
+				Debug.Log ("hit");
+			}
+		}
 
 	}
 }

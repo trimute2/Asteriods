@@ -13,11 +13,20 @@ public class Projectile : MonoBehaviour {
 	Wraper wraper;
 	Vector3 velocity;
 	private float bulletTime;
+	private bool started;
+
+	void Awake(){
+		//this is so that i dont get some weird errors
+		started = false;
+		bulletTime = float.MaxValue;
+	}
+
 	// Use this for initialization
 	void Start () {
-		bulletTime = bulletLifeSpan;
 		wraper = this.GetComponent<Wraper> ();
+		bulletTime = bulletLifeSpan;
 		velocity = transform.right.normalized * speed;
+		started = true;
 	}
 
 	/// <summary>
@@ -42,10 +51,12 @@ public class Projectile : MonoBehaviour {
 	/// Move this instance.
 	/// </summary>
 	public void Move(){
-		Vector3 position = this.transform.position;
-		position += velocity;
-		position = wraper.Wrap (position);
-		transform.position = position;
+		if (started) {
+			Vector3 position = this.transform.position;
+			position += velocity;
+			position = wraper.Wrap (position);
+			transform.position = position;
+		}
 	}
 	
 	// Update is called once per frame

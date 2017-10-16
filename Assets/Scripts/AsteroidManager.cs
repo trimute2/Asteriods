@@ -47,10 +47,9 @@ public class AsteroidManager : MonoBehaviour {
 	/// Deystroies an asteroid.
 	/// </summary>
 	/// <param name="i">The index of the asteroid to be destroyed.</param>
-	public void DeystroyAsteroid(int i){
+	public void DestroyAsteroid(int i){
 		if (i >= 0 && i < asteroids.Count) {
-			Destroy (asteroids [i]);
-			asteroids.RemoveAt (i);
+			DestroyAsteroid(asteroids[i]);
 		}
 	}
 
@@ -60,6 +59,18 @@ public class AsteroidManager : MonoBehaviour {
 	/// <param name="roid">the asteroid to be destroyed.</param>
 	public void DestroyAsteroid(GameObject roid){
 		if (asteroids.Contains (roid)) {
+			if (roid.GetComponent<AsteroidScript> ().Level == 1) {
+				float variance = Random.Range (0f, 5f);
+				GameObject newAstoroidOne = Instantiate (Asteroid, roid.transform.position, Quaternion.AngleAxis (Random.Range (0f, 360f), Vector3.forward));
+				GameObject newAstoroidTwo = Instantiate (Asteroid, roid.transform.position, Quaternion.AngleAxis (Random.Range (0f, 360f), Vector3.forward));
+				//float angle = Mathf.Acos (roid.GetComponent<AsteroidScript> ().Velocity.x)*Mathf.Rad2Deg;
+				Vector3 vel = roid.GetComponent<AsteroidScript> ().Velocity;
+				float angle = Mathf.Atan2 (vel.y, vel.x) * Mathf.Rad2Deg;
+				newAstoroidOne.GetComponent<AsteroidScript> ().LevelTwoStart (angle + variance);
+				newAstoroidTwo.GetComponent<AsteroidScript> ().LevelTwoStart (angle - variance);
+				asteroids.Add (newAstoroidOne);
+				asteroids.Add (newAstoroidTwo);
+			}
 			asteroids.Remove (roid);
 			Destroy (roid);
 		}

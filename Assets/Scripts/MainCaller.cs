@@ -23,6 +23,7 @@ public class MainCaller : MonoBehaviour {
 		engine.Move();
 		asteroidManager.MoveAsteroids ();
 		collisionManager.CollideAsteroidsBullets ();
+		collisionManager.CollideShipAsteroids ();
 		bulletManager.TickBulletTime ();
 	}
 }

@@ -18,10 +18,17 @@ public class AsteroidScript : MonoBehaviour {
 	Vector3 velocity;
 	Wraper wraper;
 	int level;
+	float angler;
 
 	public int Level{
 		get{
 			return level;
+		}
+	}
+
+	public Vector3 Velocity{
+		get{
+			return velocity;
 		}
 	}
 	/// <summary>
@@ -39,6 +46,7 @@ public class AsteroidScript : MonoBehaviour {
 	public void LevelOneStart(){
 		this.level = 1;
 		float angle = Random.Range (0f, 360f);
+		angler = angle;
 		this.velocity = Helper.DegreeToVector3 (angle);
 		this.velocity = velocity.normalized * Random.Range (minSpeed, maxSpeed);
 	}
@@ -46,9 +54,11 @@ public class AsteroidScript : MonoBehaviour {
 	/// <summary>
 	/// The start called for level two asteroids
 	/// </summary>
-	public void LevelTwoStart(){
+	public void LevelTwoStart(float angle){
 		level = 2;
-
+		this.velocity = Helper.DegreeToVector3 (angle);
+		this.velocity = velocity.normalized * Random.Range (minSpeed, maxSpeed);
+		transform.localScale *= 0.5f;
 	}
 
 	/// <summary>
