@@ -11,14 +11,11 @@ public class AsteroidScript : MonoBehaviour {
 	[Range(0f, 5f)]
 	public float maxSpeed;
 
-	public float radius;
-
 	public List<Sprite> shapes;
 
 	Vector3 velocity;
 	Wraper wraper;
 	int level;
-	float angler;
 
 	public int Level{
 		get{
@@ -46,7 +43,6 @@ public class AsteroidScript : MonoBehaviour {
 	public void LevelOneStart(){
 		this.level = 1;
 		float angle = Random.Range (0f, 360f);
-		angler = angle;
 		this.velocity = Helper.DegreeToVector3 (angle);
 		this.velocity = velocity.normalized * Random.Range (minSpeed, maxSpeed);
 	}
@@ -59,6 +55,7 @@ public class AsteroidScript : MonoBehaviour {
 		this.velocity = Helper.DegreeToVector3 (angle);
 		this.velocity = velocity.normalized * Random.Range (minSpeed, maxSpeed);
 		transform.localScale *= 0.5f;
+		this.GetComponent<CollisionCircle> ().radius *= 0.5f;
 	}
 
 	/// <summary>
@@ -79,6 +76,5 @@ public class AsteroidScript : MonoBehaviour {
 	void OnDrawGizmosSelected(){
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireCube (this.transform.position, this.GetComponent<SpriteRenderer> ().bounds.size);
-		Gizmos.DrawWireSphere (this.transform.position, this.radius);
 	}
 }
