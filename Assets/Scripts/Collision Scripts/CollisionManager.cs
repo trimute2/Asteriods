@@ -37,13 +37,15 @@ public class CollisionManager : MonoBehaviour {
 	/// Collides the ship with the asteroids.
 	/// </summary>
 	public void CollideShipAsteroids(){
-		List<GameObject> asteroids = asteroidManager.AsteroidsList;
-		CollisionCircle shipCollider = Ship.GetComponent<CollisionCircle> ();
-		for (int i = asteroids.Count - 1; i >= 0; i--) {
-			if (shipCollider.TestCollisionCircle (asteroids [i].GetComponent<CollisionCircle> ())) {
-				Debug.Log ("hit");
+		HealthManager health = Ship.GetComponent<HealthManager> ();
+		if (!health.Immune) {
+			List<GameObject> asteroids = asteroidManager.AsteroidsList;
+			CollisionCircle shipCollider = Ship.GetComponent<CollisionCircle> ();
+			for (int i = asteroids.Count - 1; i >= 0; i--) {
+				if (shipCollider.TestCollisionCircle (asteroids [i].GetComponent<CollisionCircle> ())) {
+					health.Hit ();
+				}
 			}
 		}
-
 	}
 }

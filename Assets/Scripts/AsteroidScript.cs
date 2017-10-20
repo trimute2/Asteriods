@@ -54,6 +54,7 @@ public class AsteroidScript : MonoBehaviour {
 		level = 2;
 		this.velocity = Helper.DegreeToVector3 (angle);
 		this.velocity = velocity.normalized * Random.Range (minSpeed, maxSpeed);
+		this.GetComponent<CollisionCircle> ().radius *= 0.5f;
 		transform.localScale *= 0.5f;
 		this.GetComponent<CollisionCircle> ().radius *= 0.5f;
 	}

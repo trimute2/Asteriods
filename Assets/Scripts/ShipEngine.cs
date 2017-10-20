@@ -52,6 +52,16 @@ public class ShipEngine : MonoBehaviour {
 		decelerate = true;
 	}
 
+	public void Reset(){
+		heading = Vector3.right;
+		velocity = Vector3.zero;
+		acceleration = Vector3.zero;
+		decelerate = true;
+		Quaternion rotation = Helper.UnitToQuat(heading);
+		Vector3 position = Vector3.zero; 
+		transform.SetPositionAndRotation (position, rotation);
+	}
+
 	/// <summary>
 	/// Turn the specified amount.
 	/// </summary>

@@ -10,10 +10,12 @@ public class MainCaller : MonoBehaviour {
 	public AsteroidManager asteroidManager;
 
 	ShipEngine engine;
+	HealthManager health;
 
 	// Use this for initialization
 	void Start () {
 		engine = ship.GetComponent<ShipEngine> ();
+		health = ship.GetComponent<HealthManager> ();
 	}
 	
 	// Update is called once per frame
@@ -25,5 +27,6 @@ public class MainCaller : MonoBehaviour {
 		collisionManager.CollideAsteroidsBullets ();
 		collisionManager.CollideShipAsteroids ();
 		bulletManager.TickBulletTime ();
+		health.TickImmunityTime ();
 	}
 }
