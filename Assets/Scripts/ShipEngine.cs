@@ -20,7 +20,7 @@ public class ShipEngine : MonoBehaviour {
 	Vector3 heading;
 	Vector3 velocity;
 	Vector3 acceleration;
-	bool decelerate;
+	//bool decelerate;
 
 	Wraper wraper;
 
@@ -49,14 +49,14 @@ public class ShipEngine : MonoBehaviour {
 		velocity = Vector3.zero;
 		acceleration = Vector3.zero;
 		wraper = this.GetComponent<Wraper> ();
-		decelerate = true;
+		//decelerate = true;
 	}
 
 	public void Reset(){
 		heading = Vector3.right;
 		velocity = Vector3.zero;
 		acceleration = Vector3.zero;
-		decelerate = true;
+		//decelerate = true;
 		Quaternion rotation = Helper.UnitToQuat(heading);
 		Vector3 position = Vector3.zero; 
 		transform.SetPositionAndRotation (position, rotation);
@@ -78,8 +78,12 @@ public class ShipEngine : MonoBehaviour {
 	/// <param name="amount">Amount.</param>
 	public void Thrust (float amount){
 		acceleration += heading * (amount * rateAcceleration);
+		//testing
+		//prevent deceleration from affecting acceleration
+		acceleration /= rateDeceleration;
+		velocity /= rateDeceleration;
 		//when accelerating set decelerate to false
-		decelerate = false;
+		//decelerate = false;
 	}
 
 	/// <summary>
@@ -98,19 +102,18 @@ public class ShipEngine : MonoBehaviour {
 		position = wraper.Wrap (position);
 		//set the ships position and rotation
 		transform.SetPositionAndRotation (position, rotation);
-
+		//decelerate
+		velocity *= rateDeceleration;
+		acceleration *= rateDeceleration;
+		//old method of preventing deceleration while accelerating
 		//check if accelerating before decelerating
-		if (decelerate) {
+		/*if (decelerate) {
 			velocity *= rateDeceleration;
 			acceleration *= rateDeceleration;
 		} else {
 			//if not decelerating, set decelerate to true
 			decelerate = true;
-		}
+		}*/
 	}
 
-	// Update is called once per frame
-	/*void Update () {
-		Move ();
-	}*/
 }

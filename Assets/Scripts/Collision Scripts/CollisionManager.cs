@@ -5,13 +5,9 @@ using UnityEngine;
 public class CollisionManager : MonoBehaviour {
 
 	public GameObject Ship;
+	public GameObject Boss;
 	public BulletManager bulletManager;
 	public AsteroidManager asteroidManager;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 
 	/// <summary>
 	/// Collides the asteroids with the bullets.
@@ -45,6 +41,29 @@ public class CollisionManager : MonoBehaviour {
 				if (shipCollider.TestCollisionCircle (asteroids [i].GetComponent<CollisionCircle> ())) {
 					health.Hit ();
 				}
+			}
+		}
+	}
+
+
+	public void CollideShipBossBullets(){
+		HealthManager health = Ship.GetComponent<HealthManager> ();
+		List<GameObject> bullets = bulletManager.BossBullets;
+		CollisionCircle shipCollider = Ship.GetComponent<CollisionCircle> ();
+		for (int i = bullets.Count - 1; i >= 0; i--) {
+			if (shipCollider.TestCollisionCircle (bullets [i].GetComponent<CollisionCircle> ())) {
+				//health.Hit ();
+				bulletManager.DestroyBossBullets (i);
+			}
+		}
+	}
+
+	public void CollideBossBullets(){
+		List<GameObject> bullets = bulletManager.BulletsList;
+		CollisionCircle bossCollider = Boss.GetComponent<CollisionCircle> ();
+		for (int i = bullets.Count - 1; i >= 0; i--) {
+			if (bossCollider.TestCollisionCircle (bullets [i].GetComponent<CollisionCircle> ())) {
+				bulletManager.DestroyBullet (i);
 			}
 		}
 	}

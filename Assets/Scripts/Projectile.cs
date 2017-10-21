@@ -15,6 +15,11 @@ public class Projectile : MonoBehaviour {
 	private float bulletTime;
 	private bool started;
 
+	public Vector3 Velocity{
+		get{
+			return velocity;
+		}
+	}
 	void Awake(){
 		//this is so that i dont get some weird errors
 		started = false;
