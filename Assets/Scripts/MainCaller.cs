@@ -21,11 +21,13 @@ public class MainCaller : MonoBehaviour {
 	void Start () {
 		engine = ship.GetComponent<ShipEngine> ();
 		health = ship.GetComponent<HealthManager> ();
+		//if the boss is added to the script make sure to update related parts of the script
 		bossFight = (boss != null);
 		if (bossFight) {
 			sBoss = boss.GetComponent<BossScript> ();
 			bossHealth = boss.GetComponent<HealthManager> ();
 		}
+		//if the asteroid is added to the script make sure to update related parts of the script
 		asteroidFight = (asteroidManager != null);
 	}
 	

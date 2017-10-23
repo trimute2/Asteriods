@@ -99,30 +99,42 @@ public class BossScript : MonoBehaviour {
 				}
 			}
 			float disti = (this.transform.position - target.transform.position).sqrMagnitude;
+			//check if the player is closer than any of the bullets 
 			if (disti < distance) {
 				distance = disti;
 				closest = target;
 			}
+			//if either the player or any of the players bullets are with in a certain radius avoid the object
 			if (distance < avoidRadius * avoidRadius) {
 				FacePoint (closest.transform.position, -1);
 				MovePoint (closest.transform.position, -1);
 				shotVolley = shotsPerVolley;
 			} else {
+				//move away from the edge
 				if (!EdgeMove ()) {
+					//if not close to the edge face the player
 					FacePoint (target.transform.position);
+					//if shots are left in a volley fire at the player
 					if (volleyTime == 0 && bulletManager.AddBossBullet (engine.Position, engine.Heading)) {
+						//if a shot is fired detract shot volley
 						shotVolley--;
 						if (shotVolley <= 0) {
+							//if there are no volleys left set volley time to the volley rate
+							//add the delta time to the volley rate because the tick is called after this (not sure why im only doing this here)
 							volleyTime = volleyRate + Time.deltaTime;
 						}
 					}
 				}
 			}
 		}
+		//tick the volley time and call the engines move
 		TickVolleyTime ();
 		engine.Move ();
 	}
 
+	/// <summary>
+	/// Ticks the volley time.
+	/// </summary>
 	void TickVolleyTime(){
 		if (volleyTime > 0) {
 			volleyTime -= Time.deltaTime;

@@ -97,6 +97,9 @@ public class AsteroidManager : MonoBehaviour {
 		Gizmos.DrawWireSphere (Vector3.zero, absentRadius);
 	}
 
+	/// <summary>
+	/// Check for the win condition.
+	/// </summary>
 	public void checkWin(){
 		if (asteroids.Count == 0) {
 			SceneManager.LoadScene (winScene);

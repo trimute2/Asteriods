@@ -63,10 +63,5 @@ public class Projectile : MonoBehaviour {
 			transform.position = position;
 		}
 	}
-	
-	// Update is called once per frame
-	/*void Update () {
-		TickBulletTime ();
-		Move ();
-	}*/
+
 }

@@ -71,11 +71,6 @@ public class AsteroidScript : MonoBehaviour {
 		this.transform.position = position;
 	}
 
-	/*void Update () {
-		Move();
-		//Debug.Log (velocity);
-	}*/
-
 	void OnDrawGizmosSelected(){
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireCube (this.transform.position, this.GetComponent<SpriteRenderer> ().bounds.size);

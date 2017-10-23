@@ -10,17 +10,20 @@ public class CollisionManager : MonoBehaviour {
 	public AsteroidManager asteroidManager;
 
 	/// <summary>
-	/// Collides the asteroids with the bullets.
+	/// Handles collisions between asteroids and the players bullets.
 	/// </summary>
 	public void CollideAsteroidsBullets(){
+		//get the asteroids and the players bullets
 		List<GameObject> asteroids = asteroidManager.AsteroidsList;
 		List<GameObject> bullets = bulletManager.BulletsList;
-
+		//loop through the asteroids
 		for (int i = asteroids.Count - 1; i >= 0; i--) {
+			//get the asteroids collision circle then loop through the bullets
 			CollisionCircle curr = asteroids [i].GetComponent<CollisionCircle> ();
 			for (int j = bullets.Count - 1; j >= 0; j--) {
+				//check for collision
 				if(curr.TestCollisionCircle(bullets[j].GetComponent<CollisionCircle>())){
-					//asteroidManager.DestroyAsteroid (i);
+					//if there is a collision destroy both the asteroid and the bullet then and stop looping through bullets
 					asteroidManager.DestroyAsteroid (asteroids[i]);
 					bulletManager.DestroyBullet (j);
 					j = -1;
@@ -30,22 +33,30 @@ public class CollisionManager : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Collides the ship with the asteroids.
+	/// Handles collisions between the ship and asteroids.
 	/// </summary>
 	public void CollideShipAsteroids(){
+		//get the players health script
 		HealthManager health = Ship.GetComponent<HealthManager> ();
+		//check if the player currently has immunity
 		if (!health.Immune) {
+			//get the asteroids and the ships collision circle
 			List<GameObject> asteroids = asteroidManager.AsteroidsList;
 			CollisionCircle shipCollider = Ship.GetComponent<CollisionCircle> ();
+			//loop through the asteroids
 			for (int i = asteroids.Count - 1; i >= 0; i--) {
+				//check for collision
 				if (shipCollider.TestCollisionCircle (asteroids [i].GetComponent<CollisionCircle> ())) {
+					//if there is a collision damage the ship
 					health.Hit ();
 				}
 			}
 		}
 	}
 
-
+	/// <summary>
+	/// Handle collisions between the player and the bosses bullets
+	/// </summary>
 	public void CollideShipBossBullets(){
 		HealthManager health = Ship.GetComponent<HealthManager> ();
 		List<GameObject> bullets = bulletManager.BossBullets;
@@ -60,6 +71,10 @@ public class CollisionManager : MonoBehaviour {
 		}
 	}
 
+
+	/// <summary>
+	/// Handle collisions between the boss and the players bullets
+	/// </summary>
 	public void CollideBossBullets(){
 		HealthManager health = Boss.GetComponent<HealthManager> ();
 		List<GameObject> bullets = bulletManager.BulletsList;

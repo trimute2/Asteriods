@@ -18,10 +18,6 @@ public class CollisionCircle : MonoBehaviour {
 		}
 	}
 
-	/*void Start(){
-		radius *= transform.localScale.
-	}*/
-
 	/// <summary>
 	/// Test if this collides with another collision circle.
 	/// </summary>
