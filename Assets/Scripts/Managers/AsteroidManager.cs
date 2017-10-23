@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class AsteroidManager : MonoBehaviour {
 
 	public GameObject Asteroid;
+	public GUIManager guiManager;
 
 	public int startingNumber;
 	public float absentRadius;
@@ -73,6 +74,9 @@ public class AsteroidManager : MonoBehaviour {
 				newAstoroidTwo.GetComponent<AsteroidScript> ().LevelTwoStart (angle - variance);
 				asteroids.Add (newAstoroidOne);
 				asteroids.Add (newAstoroidTwo);
+				guiManager.IncrementScore (20);
+			} else {
+				guiManager.IncrementScore (50);
 			}
 			asteroids.Remove (roid);
 			Destroy (roid);
