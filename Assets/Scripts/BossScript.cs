@@ -8,8 +8,6 @@ public class BossScript : MonoBehaviour {
 	public GameObject target;
 	public BulletManager bulletManager;
 
-	public int hp;
-
 	public float avoidRadius;
 	public float edgeRadius;
 
@@ -50,6 +48,9 @@ public class BossScript : MonoBehaviour {
 	void MovePoint(Vector3 point, int direction=1){
 		float dp = Vector3.Dot (this.transform.right, point - this.transform.position);
 		dp = Mathf.Clamp (dp, -1, 1) * direction;
+		if (volleyTime != 0) {
+			dp *= 0.5f;
+		}
 		engine.Thrust (dp);
 	}
 
@@ -82,35 +83,44 @@ public class BossScript : MonoBehaviour {
 		return edge;
 	}
 
-	void Move(){
-		//determine if bullets are in avoid distance
-		List<GameObject> bullets = bulletManager.BulletsList;
-		float distance = float.MaxValue;
-		int closest = -1;
-		//get closest bullet
-		for (int i = bullets.Count - 1; i >= 0; i--) {
-			float dist = (this.transform.position - bullets [i].transform.position).sqrMagnitude;
-			if (dist < distance) {
-				distance = dist;
-				closest = i;
+	public void Move(){
+		//dont move if recharging
+		if (volleyTime == 0) {
+			//determine if bullets are in avoid distance
+			List<GameObject> bullets = bulletManager.BulletsList;
+			float distance = float.MaxValue;
+			GameObject closest = null;
+			//get closest bullet
+			for (int i = bullets.Count - 1; i >= 0; i--) {
+				float dist = (this.transform.position - bullets [i].transform.position).sqrMagnitude;
+				if (dist < distance) {
+					distance = dist;
+					closest = bullets [i];
+				}
 			}
-		}
-		if (distance < avoidRadius * avoidRadius) {
-			FacePoint (bullets [closest].transform.position, -1);
-			MovePoint (bullets [closest].transform.position, -1);
-			shotVolley = shotsPerVolley;
-		} else {
-			if (!EdgeMove ()) {
-				FacePoint (target.transform.position);
-				if (volleyTime == 0 && bulletManager.AddBossBullet (engine.Position, engine.Heading)) {
-					shotVolley--;
-					if (shotVolley <= 0) {
-						volleyTime = volleyRate + Time.deltaTime;
+			float disti = (this.transform.position - target.transform.position).sqrMagnitude;
+			if (disti < distance) {
+				distance = disti;
+				closest = target;
+			}
+			if (distance < avoidRadius * avoidRadius) {
+				FacePoint (closest.transform.position, -1);
+				MovePoint (closest.transform.position, -1);
+				shotVolley = shotsPerVolley;
+			} else {
+				if (!EdgeMove ()) {
+					FacePoint (target.transform.position);
+					if (volleyTime == 0 && bulletManager.AddBossBullet (engine.Position, engine.Heading)) {
+						shotVolley--;
+						if (shotVolley <= 0) {
+							volleyTime = volleyRate + Time.deltaTime;
+						}
 					}
 				}
 			}
 		}
 		TickVolleyTime ();
+		engine.Move ();
 	}
 
 	void TickVolleyTime(){
@@ -121,12 +131,6 @@ public class BossScript : MonoBehaviour {
 				shotVolley = shotsPerVolley;
 			}
 		}
-	}
-
-	// Update is called once per frame
-	void Update () {
-		Move ();
-		engine.Move ();
 	}
 
 	void OnDrawGizmosSelected(){

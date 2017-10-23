@@ -10,6 +10,7 @@ public class HealthManager : MonoBehaviour {
 	public float immunityTime;
 
 	public bool immunityOnStart;
+	public bool resetPosition;
 
 	public string restartFrom;
 
@@ -43,10 +44,12 @@ public class HealthManager : MonoBehaviour {
 		if (!(immunity > 0f)) {
 			immunity = immunityTime;
 			lives -= 1;
-			if (lives == 0) {
+			if (lives <= 0) {
 				SceneManager.LoadScene (restartFrom);
 			}
-			this.GetComponent<ShipEngine> ().Reset();
+			if (resetPosition) {
+				this.GetComponent<ShipEngine> ().Reset ();
+			}
 		}
 	}
 

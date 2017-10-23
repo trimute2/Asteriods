@@ -65,7 +65,9 @@ public class AsteroidScript : MonoBehaviour {
 	public void Move(){
 		Vector3 position = this.transform.position;
 		position += velocity;
-		position = wraper.Wrap (position);
+		if (wraper != null) {
+			position = wraper.Wrap (position);
+		}
 		this.transform.position = position;
 	}
 

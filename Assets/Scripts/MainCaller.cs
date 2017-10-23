@@ -14,6 +14,7 @@ public class MainCaller : MonoBehaviour {
 	bool asteroidFight;
 	ShipEngine engine;
 	HealthManager health;
+	HealthManager bossHealth;
 	BossScript sBoss;
 
 	// Use this for initialization
@@ -23,6 +24,7 @@ public class MainCaller : MonoBehaviour {
 		bossFight = (boss != null);
 		if (bossFight) {
 			sBoss = boss.GetComponent<BossScript> ();
+			bossHealth = boss.GetComponent<HealthManager> ();
 		}
 		asteroidFight = (asteroidManager != null);
 	}
@@ -33,14 +35,17 @@ public class MainCaller : MonoBehaviour {
 		bulletManager.MoveBullets ();
 		engine.Move ();
 		if (bossFight) {
+			sBoss.Move ();
 			collisionManager.CollideShipBossBullets ();
 			collisionManager.CollideBossBullets ();
+			bossHealth.TickImmunityTime ();
 		}
 
 		if(asteroidFight) {
 			asteroidManager.MoveAsteroids ();
 			collisionManager.CollideAsteroidsBullets ();
 			collisionManager.CollideShipAsteroids ();
+			asteroidManager.checkWin ();
 		}
 		bulletManager.TickBulletTime ();
 		health.TickImmunityTime ();

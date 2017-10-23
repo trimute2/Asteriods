@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AsteroidManager : MonoBehaviour {
 
@@ -8,6 +9,8 @@ public class AsteroidManager : MonoBehaviour {
 
 	public int startingNumber;
 	public float absentRadius;
+
+	public string winScene;
 
 	List<GameObject> asteroids;
 
@@ -88,5 +91,11 @@ public class AsteroidManager : MonoBehaviour {
 	void OnDrawGizmosSelected(){
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere (Vector3.zero, absentRadius);
+	}
+
+	public void checkWin(){
+		if (asteroids.Count == 0) {
+			SceneManager.LoadScene (winScene);
+		}
 	}
 }

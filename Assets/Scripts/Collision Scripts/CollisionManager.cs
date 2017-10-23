@@ -50,20 +50,26 @@ public class CollisionManager : MonoBehaviour {
 		HealthManager health = Ship.GetComponent<HealthManager> ();
 		List<GameObject> bullets = bulletManager.BossBullets;
 		CollisionCircle shipCollider = Ship.GetComponent<CollisionCircle> ();
-		for (int i = bullets.Count - 1; i >= 0; i--) {
-			if (shipCollider.TestCollisionCircle (bullets [i].GetComponent<CollisionCircle> ())) {
-				//health.Hit ();
-				bulletManager.DestroyBossBullets (i);
+		if (!health.Immune) {
+			for (int i = bullets.Count - 1; i >= 0; i--) {
+				if (shipCollider.TestCollisionCircle (bullets [i].GetComponent<CollisionCircle> ())) {
+					health.Hit ();
+					bulletManager.DestroyBossBullets (i);
+				}
 			}
 		}
 	}
 
 	public void CollideBossBullets(){
+		HealthManager health = Boss.GetComponent<HealthManager> ();
 		List<GameObject> bullets = bulletManager.BulletsList;
 		CollisionCircle bossCollider = Boss.GetComponent<CollisionCircle> ();
-		for (int i = bullets.Count - 1; i >= 0; i--) {
-			if (bossCollider.TestCollisionCircle (bullets [i].GetComponent<CollisionCircle> ())) {
-				bulletManager.DestroyBullet (i);
+		if (!health.Immune) {
+			for (int i = bullets.Count - 1; i >= 0; i--) {
+				if (bossCollider.TestCollisionCircle (bullets [i].GetComponent<CollisionCircle> ())) {
+					health.Hit ();
+					bulletManager.DestroyBullet (i);
+				}
 			}
 		}
 	}
